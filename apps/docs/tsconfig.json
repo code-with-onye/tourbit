@@ -1,14 +1,31 @@
 {
-  "exclude": ["node_modules"],
-  "extends": "@acme/tsconfig/nextjs.json",
+  "exclude": [
+    "node_modules"
+  ],
+  "extends": "@tourbit/tsconfig/base.json",
   "compilerOptions": {
-    "outDir": "dist",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "jsx": "preserve",
+    "outDir": "build",
     "incremental": true,
     "plugins": [
       {
         "name": "next"
       }
+    ],
+    "allowJs": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
     ]
   },
-  "include": ["src", "next-env.d.ts", ".next/types/**/*.ts"]
+  "include": [
+    "src",
+    "next-env.d.ts",
+    ".next/types/**/*.ts"
+  ]
 }

@@ -1,3 +1,6 @@
+import { TourbitProvider } from "@tourbit/core";
+import React from "react";
+
 export default function RootLayout({
   children,
 }: {
@@ -5,7 +8,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <TourbitProvider apiKey="test_dKj8mP2x-nR5vL9qY-hB4wC7tF-gN3sA6uE">
+          {children}
+        </TourbitProvider>
+      </body>
     </html>
   );
 }
