@@ -17,6 +17,7 @@
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.27.9",
     "@tourbit/eslint-config": "*",
     "@tourbit/tsconfig": "*",
     "@tourbit/utils": "*",
