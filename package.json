@@ -2,6 +2,7 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
+    "publish:cli": "turbo run build && npm publish -w packages/tourbit-core --access=public",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "clean": "turbo clean && rm -rf node_modules",

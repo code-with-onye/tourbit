@@ -24,7 +24,6 @@ export const useApi = () => {
   return context;
 };
 
-
 export const TourbitProvider: React.FC<ApiProviderProps> = ({
   apiKey,
   baseUrl = "https://api.default.com",

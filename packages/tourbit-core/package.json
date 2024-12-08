@@ -1,11 +1,17 @@
 {
-  "name": "@tourbit/core",
-  "version": "0.0.1",
+  "name": "@tourbit/cli",
+  "version": "0.0.2",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "sideEffects": true,
   "license": "MIT",
+  "repository": "https://github.com/tourbit/tourbit",
+  "keywords": [
+    "tourbit",
+    "tool",
+    "tour"
+  ],
   "files": [
     "dist/**"
   ],

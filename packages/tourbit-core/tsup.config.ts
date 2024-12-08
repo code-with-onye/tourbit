@@ -8,7 +8,8 @@ export default defineConfig({
     js: "'use client'",
   },
   format: ["cjs", "esm"],
-  external: ["react"],
+  bundle: true,
+  external: ["react", "@tourbit/eslint-config", "@tourbit/tsconfig"],
   dts: true,
   injectStyle: true,
 });
