@@ -1,4 +1,4 @@
-import { TourbitProvider } from "@tourbit/core";
+import { TourbitProvider } from "@tourbit/cli";
 import React from "react";
 
 export default function RootLayout({

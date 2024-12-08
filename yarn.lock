@@ -639,7 +639,7 @@
     "@swc/counter" "^0.1.3"
     tslib "^2.4.0"
 
-"@tourbit/cli@file:/Users/trustonyemachi/Documents/side-project/web-tour/tourbit/packages/tourbit-core":
+"@tourbit/cli@^0.0.2", "@tourbit/cli@file:/Users/trustonyemachi/Documents/side-project/web-tour/tourbit/packages/tourbit-core":
   version "0.0.2"
   resolved "file:packages/tourbit-core"
   dependencies:
