@@ -1,44 +1,38 @@
-name: Release
+name: Publish CLI to NPM
 
 on:
-  push:
-    branches:
-      - main
-
-concurrency: ${{ github.workflow }}-${{ github.ref }}
+  workflow_dispatch:
+  release:
+    types: [created]
 
 jobs:
-  release:
-    name: Release
+  publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v4
-
-      - name: Setup pnpm 8
-        uses: pnpm/action-setup@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          version: 8
-
-      - name: Setup Node.js 20.x
-        uses: actions/setup-node@v4
+          node-version: '18'
+          registry-url: 'https://registry.npmjs.org'
+      
+      # Setup Turborepo cache
+      - uses: actions/cache@v3
         with:
-          node-version: 20.x
-
-      - name: Install Dependencies
-        run: pnpm i
-
-      - name: Create Release Pull Request or Publish to npm
-        id: changesets
-        uses: changesets/action@v1
-        with:
-          # This expects you to have a script called release which does a build for your packages and calls changeset publish
-          publish: pnpm release
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
+      
+      # Install dependencies
+      - run: npm ci
+      
+      # Build all packages
+      - run: npx turbo run build
+      
+      # Run tests (if applicable)
+      - run: npx turbo run test
+      
+      # Publish CLI
+      - run: npm publish -w apps/cli --access=public
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Send a Slack notification if a publish happens
-        if: steps.changesets.outputs.published == 'true'
-        # You can do something when a publish happens.
-        run: my-slack-bot send-notification --message "A new version of ${GITHUB_REPOSITORY} was published!"
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
