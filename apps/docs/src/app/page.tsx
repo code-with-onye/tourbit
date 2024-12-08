@@ -1,5 +1,5 @@
 "use client";
-import { Tourbit, useApi } from "@tourbit/core";
+import { Tourbit, useApi } from "@tourbit/cli";
 // import { useApi } from "@tourbit/utils";
 import Image from "next/image";
 import { useState } from "react";
