@@ -5,9 +5,8 @@ on:
     branches:
       - main
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+permissions:
+  contents: write
 
 jobs:
   release:
@@ -43,7 +42,7 @@ jobs:
           else
             echo "Changes detected"
             echo "changes=true" >> $GITHUB_ENV
-          fi
+        shell: bash
 
       - name: Push Changes
         if: env.changes == 'true'
