@@ -5,19 +5,17 @@ on:
     branches:
       - main
 
-permissions:
-  contents: write
-  pull-requests: write
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repo
+      - name: Checkout Repository
         uses: actions/checkout@v4
-        with:
-          persist-credentials: false  # Disables automatic token authentication
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -35,7 +33,20 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Check for Changes
+        id: git_status
+        run: |
+          git fetch
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No changes to commit"
+            echo "changes=false" >> $GITHUB_ENV
+          else
+            echo "Changes detected"
+            echo "changes=true" >> $GITHUB_ENV
+          fi
+
       - name: Push Changes
+        if: env.changes == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
