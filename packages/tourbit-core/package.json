@@ -17,7 +17,7 @@
   ],
   "scripts": {
     "build:css": "npx tailwindcss -i ./src/global.css -o ./dist/index.css",
-    "build": "yarn build:css && tsup src/index.tsx --format esm,cjs --dts --external react ",
+    "build": "pnpm build:css && tsup src/index.tsx --format esm,cjs --dts --external react ",
     "dev": "tsup src/index.tsx --format esm,cjs --watch --dts --external react",
     "lint": "eslint \"src/**/*.ts*\"",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
