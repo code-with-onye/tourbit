@@ -21,7 +21,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20.x'
-          cache: 'npm'
 
       - name: Install Dependencies
         run: npm install
@@ -45,7 +44,6 @@ jobs:
             echo "Changes detected"
             echo "changes=true" >> $GITHUB_ENV
           fi
-
       - name: Push Changes
         if: env.changes == 'true'
         run: |
@@ -56,12 +54,3 @@ jobs:
           git push origin main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Publish to npm
-        if: env.changes == 'true'
-        uses: changesets/action@v1
-        with:
-          publish: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
