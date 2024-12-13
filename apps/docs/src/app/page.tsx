@@ -14,7 +14,7 @@ export default function Home() {
     {
       selector: "#feature1",
       title: "Feature 1",
-      content: "This is our amazing first feature.",
+      content: "This is our amazing first feature1.",
     },
     {
       selector: "#feature2",
