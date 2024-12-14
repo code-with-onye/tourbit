@@ -21,7 +21,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20.x'
-          cache: 'npm'
 
       - name: Install Dependencies
         run: npm install
@@ -34,19 +33,20 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Check for Changesets
-        id: check_changesets
+      - name: Check for Changes
+        id: git_status
         run: |
-          if [ ! -d ".changeset" ] || [ -z "$(ls -A .changeset)" ]; then
-            echo "No changesets found."
-            echo "has_changesets=false" >> $GITHUB_ENV
+          git fetch
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No changes to commit"
+            echo "changes=false" >> $GITHUB_ENV
           else
-            echo "Changesets found."
-            echo "has_changesets=true" >> $GITHUB_ENV
+            echo "Changes detected"
+            echo "changes=true" >> $GITHUB_ENV
           fi
 
       - name: Push Changes
-        if: env.has_changesets == 'true'
+        if: env.changes == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -55,12 +55,3 @@ jobs:
           git push origin main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Publish to npm
-        if: env.has_changesets == 'true'
-        uses: changesets/action@v1
-        with:
-          publish: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
