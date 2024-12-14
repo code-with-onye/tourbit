@@ -34,20 +34,19 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Check for Changes
-        id: git_status
+      - name: Check for Changesets
+        id: check_changesets
         run: |
-          git fetch
-          if [ -z "$(git status --porcelain)" ]; then
-            echo "No changes to commit"
-            echo "changes=false" >> $GITHUB_ENV
+          if [ ! -d ".changeset" ] || [ -z "$(ls -A .changeset)" ]; then
+            echo "No changesets found."
+            echo "has_changesets=false" >> $GITHUB_ENV
           else
-            echo "Changes detected"
-            echo "changes=true" >> $GITHUB_ENV
+            echo "Changesets found."
+            echo "has_changesets=true" >> $GITHUB_ENV
           fi
 
       - name: Push Changes
-        if: env.changes == 'true'
+        if: env.has_changesets == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -58,10 +57,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish to npm
-        if: env.changes == 'true'
+        if: env.has_changesets == 'true'
         uses: changesets/action@v1
         with:
           publish: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.TOURBIT_NPM_SECRET }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
