@@ -25,10 +25,20 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Create Release Pull Request or Publish
+      - name: Create Release Pull Request
+        id: changesets
         uses: changesets/action@v1
         with:
-          publish: npm run publish
+          publish: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.TOURBIT_NPM_SECRET }}
+
+      - name: Version Packages
+        run: npx changeset version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish Packages
+        run: npx changeset publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.TOURBIT_NPM_SECRET}}
