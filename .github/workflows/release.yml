@@ -33,12 +33,25 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Version Packages
-        run: npx changeset version
+      - name: Check for Changes
+        id: git_status
+        run: |
+          git fetch
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No changes to commit"
+            echo "changes=false" >> $GITHUB_ENV
+          else
+            echo "Changes detected"
+            echo "changes=true" >> $GITHUB_ENV
+          fi
+
+      - name: Push Changes
+        if: env.changes == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Apply changes"
+          git push origin main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Publish Packages
-        run: npx changeset publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.TOURBIT_NPM_SECRET}}
