@@ -1,38 +1,6 @@
 "use client";
-import { Tourbit, useApi, } from "@tourbit/cli";
-// import { useApi } from "@tourbit/utils";
 import Image from "next/image";
-import { useState } from "react";
-
 export default function Home() {
-  const [showTour, setShowTour] = useState(true);
-  const { apiKey, baseUrl } = useApi();
-
-  console.log(apiKey, baseUrl);
-
-  const tourSteps = [
-    {
-      selector: "#feature1",
-      title: "Feature 1",
-      content: "This is our amazing first feature1.",
-    },
-    {
-      selector: "#feature2",
-      title: "Feature 2",
-      content: "Check out this awesome second feature.",
-    },
-    {
-      selector: "#feature3",
-      title: "Feature 3",
-      content: "Don't miss our incredible third feature.",
-    },
-    {
-      selector: "#feature4",
-      title: "Feature 4",
-      content: "Don't miss our incredible third feature.",
-    },
-  ];
-
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
@@ -136,9 +104,7 @@ export default function Home() {
           Go to nextjs.org →
         </a>
       </footer>
-      {showTour && (
-        <Tourbit steps={tourSteps} onComplete={() => setShowTour(false)} />
-      )}
+     
     </div>
   );
 }
