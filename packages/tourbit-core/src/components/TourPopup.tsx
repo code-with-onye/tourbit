@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import  { useEffect } from "react";
 import { motion } from "framer-motion";
 
 interface TourStep {
@@ -20,6 +20,7 @@ interface TourPopupProps {
   theme?: "light" | "dark";
   animation?: "bounce" | "fade" | "slide";
   showSpotlight?: boolean;
+  showProgress?: boolean;
 }
 
 const TourPopup: React.FC<TourPopupProps> = ({
@@ -35,9 +36,8 @@ const TourPopup: React.FC<TourPopupProps> = ({
   theme = "light",
   animation = "bounce",
   showSpotlight = true,
+  showProgress = false
 }) => {
-  const [hasBeenSeen, setHasBeenSeen] = useState(false);
-
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       switch (e.key) {
@@ -85,11 +85,11 @@ const TourPopup: React.FC<TourPopupProps> = ({
       )}
 
       <motion.div
-        className={`fixed z-50 shadow-lg rounded-lg  p-4 max-w-sm transform transition-all duration-300 ease-in-out ${themeClasses}`}
+        className={`fixed z-50 shadow-lg rounded-lg p-4 max-w-sm transform transition-all duration-300 ease-in-out ${themeClasses}`}
         style={{
           ...customStyles,
-          top: `${position.top}px`,
-          left: `${position.left}px`,
+          top: position.top,
+          left: position.left,
         }}
         variants={animationVariants}
         animate={animation}
@@ -115,20 +115,21 @@ const TourPopup: React.FC<TourPopupProps> = ({
         </button>
 
         {/* Progress indicators */}
-        <div className="mb-4 w-full bg-gray-200 h-1 rounded-full overflow-hidden mt-6">
-          <div
-            className="h-full bg-indigo-500 transition-all duration-300"
-            style={{ width: `${((currentStep + 1) / totalSteps) * 100}%` }}
-          />
-        </div>
+        {showProgress && (
+          <div className="mb-4 w-full bg-gray-200 h-1 rounded-full overflow-hidden mt-6">
+            <div
+              className="h-full bg-indigo-500 transition-all duration-300"
+              style={{ width: `${((currentStep + 1) / totalSteps) * 100}%` }}
+            />
+          </div>
+        )}
 
         {/* Content */}
         <h3 className="text-lg font-medium mb-2">{step.title}</h3>
-        <div className="w-full bg-gray-400"></div>
         <p className="text-sm mb-4">{step.content}</p>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center gap-x-8">
           <button
             onClick={onPrev}
             disabled={currentStep === 0}
@@ -196,20 +197,6 @@ const TourPopup: React.FC<TourPopupProps> = ({
             Skip tutorial
           </button>
         )}
-
-        {/* "Don't show again" option */}
-        <div className="mt-4 flex items-center">
-          <input
-            type="checkbox"
-            id="dontShowAgain"
-            checked={hasBeenSeen}
-            onChange={(e) => setHasBeenSeen(e.target.checked)}
-            className="mr-2"
-          />
-          <label htmlFor="dontShowAgain" className="text-xs">
-            {"Don't show this again"}
-          </label>
-        </div>
       </motion.div>
     </>
   );

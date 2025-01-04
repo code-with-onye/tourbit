@@ -27,6 +27,7 @@
     "@tourbit/eslint-config": "*",
     "@tourbit/tsconfig": "*",
     "@tourbit/utils": "*",
+    "@types/node": "^22.10.2",
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.19",
     "autoprefixer": "^10.4.20",
@@ -37,6 +38,8 @@
     "typescript": "5.4.5"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.62.8",
+    "axios": "^1.7.9",
     "framer-motion": "^11.11.9",
     "postcss": "^8.4.47",
     "react": "^18.2.0"

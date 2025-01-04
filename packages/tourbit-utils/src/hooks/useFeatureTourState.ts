@@ -1,39 +1,43 @@
 import { TourStep } from "../types";
-import { useState, useEffect, useCallback } from "react";
-import {useLocalStorage} from "./useLocalstorage";
+import { useState, useCallback, useEffect } from "react";
 
 export const useFeatureTourState = (
   steps: TourStep[],
-  onComplete: () => void,
-  persistKey: string
+  initialStep: number,
+  onStepChange: (step: number) => void,
+  onComplete: () => void
 ) => {
-  const [key, setKey] = useLocalStorage<string>(persistKey, "");
-  const [currentStep, setCurrentStep] = useState(() => {
-    const savedStep = key;
-    return savedStep ? parseInt(savedStep, 10) : 0;
-  });
+  const [currentStep, setCurrentStep] = useState(initialStep);
 
-  useEffect(() => {
-    setKey(currentStep.toString());
-  }, [currentStep, setKey]);
+  const updateStep = useCallback(
+    (newStep: number) => {
+      setCurrentStep(newStep);
+      onStepChange(newStep); 
+    },
+    [onStepChange]
+  );
 
   const handleNext = useCallback(() => {
     if (currentStep < steps.length - 1) {
-      setCurrentStep(currentStep + 1);
+      updateStep(currentStep + 1);
     } else {
       onComplete();
     }
-  }, [currentStep, steps.length, onComplete]);
+  }, [currentStep, steps.length, updateStep, onComplete]);
 
   const handlePrev = useCallback(() => {
     if (currentStep > 0) {
-      setCurrentStep(currentStep - 1);
+      updateStep(currentStep - 1);
     }
-  }, [currentStep]);
+  }, [currentStep, updateStep]);
 
   const handleClose = useCallback(() => {
     onComplete();
   }, [onComplete]);
+
+  useEffect(() => {
+    setCurrentStep(initialStep);
+  }, [initialStep]);
 
   return { currentStep, handleNext, handlePrev, handleClose };
 };

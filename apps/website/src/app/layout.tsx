@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { TourbitProvider } from "@tourbit/cli";
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -28,7 +29,16 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <TourbitProvider
+          apiKey={process.env.NEXT_PUBLIC_TOURBIT_API_KEY as string}
+          userId={"23456ff"}
+          user={{
+            name: "Trust",
+            email: "trustonye@gmail.com",
+          }}
+        >
+          {children}
+        </TourbitProvider>
       </body>
     </html>
   );

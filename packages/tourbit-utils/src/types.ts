@@ -5,8 +5,7 @@ export interface TourStep {
 }
 
 export interface FeatureTourProps {
-  steps: TourStep[];
-  onComplete: () => void;
+  tourId: string;
   customStyles?: React.CSSProperties;
   persistKey?: string;
 }
