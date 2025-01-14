@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { TourbitProvider } from "@tourbit/cli";
 import localFont from "next/font/local";
 import "./globals.css";
+import { TanstackProvider } from "@/providers/tanstack-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -29,16 +31,19 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <TourbitProvider
-          apiKey={process.env.NEXT_PUBLIC_TOURBIT_API_KEY as string}
-          userId={"23456ff"}
-          user={{
-            name: "Trust",
-            email: "trustonye@gmail.com",
-          }}
-        >
-          {children}
-        </TourbitProvider>
+        <TanstackProvider>
+          <TourbitProvider
+            apiKey={process.env.NEXT_PUBLIC_TOURBIT_API_KEY as string}
+            userId={"23456ff"}
+            user={{
+              name: "Trust",
+              email: "trustonye@gmail.com",
+            }}
+          >
+           {children}
+            <Toaster richColors closeButton position="top-left" />
+          </TourbitProvider>
+        </TanstackProvider>
       </body>
     </html>
   );
