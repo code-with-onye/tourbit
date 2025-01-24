@@ -13,12 +13,14 @@ import { FormInput } from "./FormInput";
 import { SignInSchema } from "./formSchemas";
 import Link from "next/link";
 import { useSignIn } from "@/hooks/server/auth";
-import { handleError, handleSuccess } from "@/lib/form-handler";
+import { handleError } from "@/lib/form-handler";
+import { useRouter } from "next/navigation";
 
 export function SignInForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const router = useRouter();
   const form = useForm<z.infer<typeof SignInSchema>>({
     resolver: zodResolver(SignInSchema),
     defaultValues: {
@@ -32,13 +34,12 @@ export function SignInForm({
   function onSubmit(values: z.infer<typeof SignInSchema>) {
     mutate(values, {
       onSuccess() {
-        handleSuccess("sign in successfule");
+        router.push("/dashboard");
       },
       onError(error) {
         handleError(error);
       },
     });
-    console.log(values);
   }
 
   return (

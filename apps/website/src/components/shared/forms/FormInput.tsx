@@ -25,6 +25,7 @@ interface FormInputProps<TFieldValues extends FieldValues> {
   isLoading?: boolean;
   className?: string;
   disabled?: boolean;
+  onBlur?: () => void | Promise<void>;
 }
 
 interface FormFooterProps {
@@ -46,6 +47,7 @@ const FormInput = <TFieldValues extends FieldValues>({
   isLoading,
   className,
   disabled,
+  onBlur,
 }: FormInputProps<TFieldValues>): React.ReactElement => {
   return (
     <FormField
@@ -60,6 +62,7 @@ const FormInput = <TFieldValues extends FieldValues>({
               placeholder={placeholder}
               type={inputType}
               disabled={isLoading || disabled}
+              onBlur={onBlur}
             />
           </FormControl>
           {description && <FormDescription>{description}</FormDescription>}

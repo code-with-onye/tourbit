@@ -40,7 +40,7 @@ export default function RootLayout({
               email: "trustonye@gmail.com",
             }}
           >
-           {children}
+            {children}
             <Toaster richColors closeButton position="top-left" />
           </TourbitProvider>
         </TanstackProvider>

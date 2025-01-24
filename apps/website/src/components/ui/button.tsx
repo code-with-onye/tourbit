@@ -6,7 +6,7 @@ import { LoadingIcon } from "@/assets/icons";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
@@ -22,7 +22,7 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
-        default: "h-6 py-4 px-2 text-xs",
+        default: "h-6 py-4 px-2 text-xs font-semibold",
         block: "w-full justify-center items-center flex py-2 block",
         sm: "h-6 rounded-md px-2 text-xs",
         lg: "h-10 rounded-md px-8",
@@ -98,13 +98,13 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           <>
             {Icon && iconPosition === "left" && (
               <Icon
-                className={cn("mr-2 w-electra-icon", getColor(), iconClassName)}
+                className={cn("mr-1 w-3 h-3 ", getColor(), iconClassName)}
               />
             )}
             {children}
             {Icon && iconPosition === "right" && (
               <Icon
-                className={cn("ml-2 w-electra-icon", getColor(), iconClassName)}
+                className={cn("ml-1 w-3 h-3 ", getColor(), iconClassName)}
               />
             )}
           </>

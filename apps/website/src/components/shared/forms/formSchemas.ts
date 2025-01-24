@@ -15,3 +15,14 @@ export const SignUpSchema = z
     confirmPassword: z.string(),
   })
   .merge(SignInSchema);
+
+export const TourSchema = z.object({
+  title: z.string().optional(),
+  status: z.boolean().optional(),
+});
+
+export const StepSchema = z.object({
+  title: z.string().min(1, { message: "Title is required" }),
+  content: z.string().min(1, { message: "Descriptioon is required" }),
+  selector: z.string().min(3, { message: "Selector is required" }),
+});
