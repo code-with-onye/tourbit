@@ -3,13 +3,13 @@
 import * as React from "react";
 import {
   BookOpen,
+  Braces,
   Command,
   Frame,
   LifeBuoy,
   Map,
   PieChart,
   Send,
-  Settings2,
   Workflow,
 } from "lucide-react";
 
@@ -65,27 +65,9 @@ const data = {
       ],
     },
     {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
+      title: "Developer",
+      url: "/developer",
+      icon: Braces,
     },
   ],
   navSecondary: [
@@ -120,7 +102,7 @@ const data = {
 };
 
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
-  user: z.infer<typeof UserSchema>; 
+  user: z.infer<typeof UserSchema>;
 }
 
 export function AppSidebar({ user, ...props }: AppSidebarProps) {
@@ -145,7 +127,6 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        {/* <NavProjects projects={data.projects} /> */}
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>

@@ -52,6 +52,10 @@ class TourService {
     );
   }
 
+  async deleteTour(tourId: string) {
+    return await privateAxiosInstance.delete(`${this.baseEndpoint}/${tourId}`);
+  }
+
   async deleteStep(tourId: string, stepId: string) {
     return await privateAxiosInstance.patch(
       `${this.baseEndpoint}/${tourId}/steps/${stepId}/delete`

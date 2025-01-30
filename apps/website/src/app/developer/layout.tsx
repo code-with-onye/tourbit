@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 
 const breadcrumbs = [
   { label: "Dashboard", href: "/dashboard" },
-  { label: "Tours", href: "/tour", isCurrentPage: true },
+  { label: "Developer", href: "/developer", isCurrentPage: true },
 ];
 
 export default async function Layout({

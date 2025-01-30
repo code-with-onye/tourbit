@@ -35,6 +35,7 @@ export function SignInForm({
     mutate(values, {
       onSuccess() {
         router.push("/dashboard");
+        router.refresh()
       },
       onError(error) {
         handleError(error);

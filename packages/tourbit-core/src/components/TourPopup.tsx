@@ -1,4 +1,4 @@
-import  { useEffect } from "react";
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 
 interface TourStep {
@@ -9,7 +9,7 @@ interface TourStep {
 
 interface TourPopupProps {
   step: TourStep;
-  position: { top: number; left: number };
+  position?: { top: number; left: number };
   currentStep: number;
   totalSteps: number;
   onNext: () => void;
@@ -21,9 +21,10 @@ interface TourPopupProps {
   animation?: "bounce" | "fade" | "slide";
   showSpotlight?: boolean;
   showProgress?: boolean;
+  mode: "preview" | "live";
 }
 
-const TourPopup: React.FC<TourPopupProps> = ({
+export const TourPopup: React.FC<TourPopupProps> = ({
   step,
   position,
   currentStep,
@@ -36,7 +37,8 @@ const TourPopup: React.FC<TourPopupProps> = ({
   theme = "light",
   animation = "bounce",
   showSpotlight = true,
-  showProgress = false
+  showProgress = false,
+  mode,
 }) => {
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -79,7 +81,11 @@ const TourPopup: React.FC<TourPopupProps> = ({
     <>
       {showSpotlight && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-60 z-40 transition-opacity duration-300"
+          className={
+            mode === "preview"
+              ? "feature-tour-highlight"
+              : "fixed inset-0 bg-black bg-opacity-60 z-40 transition-opacity duration-300"
+          }
           onClick={onClose}
         />
       )}
@@ -88,8 +94,10 @@ const TourPopup: React.FC<TourPopupProps> = ({
         className={`fixed z-50 shadow-lg rounded-lg p-4 max-w-sm transform transition-all duration-300 ease-in-out ${themeClasses}`}
         style={{
           ...customStyles,
-          top: position.top,
-          left: position.left,
+          ...(mode !== "preview" && position && {
+            top: position.top,
+            left: position.left,
+          }),
         }}
         variants={animationVariants}
         animate={animation}
@@ -201,5 +209,3 @@ const TourPopup: React.FC<TourPopupProps> = ({
     </>
   );
 };
-
-export default TourPopup;

@@ -20,17 +20,18 @@ export const useCreateTour = () => {
 };
 
 export const useGetTours = () => {
-  const { data, isPending } = useQuery({
+  const { data, isPending, error } = useQuery({
     queryKey: ["get-tours"],
     queryFn: async () => tourService.getTours(),
   });
 
-  return { data: data?.data as z.infer<typeof TourSchema>[], isPending };
+  return { data: data?.data as z.infer<typeof TourSchema>[], isPending, error };
 };
 
 export const useGetTourById = (tourId: string) => {
   const { data, isPending } = useQuery({
     queryKey: ["get-tour-by-id", tourId],
+    enabled: !!tourId,
     queryFn: async () => tourService.getTourById(tourId),
   });
 
@@ -94,6 +95,22 @@ export const useUpdateStep = () => {
       stepId: string;
     }) => await tourService.updateStep({ data, tourId, stepId }),
     onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["get-tour-by-id"] });
+    },
+  });
+
+  return { mutate, isPending };
+};
+
+export const useDeleteTour = () => {
+  const queryClient = useQueryClient();
+
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["delete-tour"],
+    mutationFn: async ({ tourId }: { tourId: string }) =>
+      await tourService.deleteTour(tourId),
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["get-tours"] });
       queryClient.invalidateQueries({ queryKey: ["get-tour-by-id"] });
     },
   });

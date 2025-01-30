@@ -7,13 +7,29 @@ import { AppSidebar } from "../sidebar/app-sidebar";
 import { Separator } from "@/components/ui/separator";
 import { z } from "zod";
 import { UserSchema } from "@/schemas/user";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+
+type BreadcrumbItem = {
+  label: string;
+  href?: string;
+  isCurrentPage?: boolean;
+};
 
 export const DashboardLayout = ({
   children,
   user,
+  breadcrumbs = [],
 }: {
   children: React.ReactNode;
   user: z.infer<typeof UserSchema>;
+  breadcrumbs: BreadcrumbItem[];
 }) => {
   return (
     <SidebarProvider>
@@ -23,19 +39,26 @@ export const DashboardLayout = ({
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="mr-2 h-4" />
-            {/* <Breadcrumb>
+            <Breadcrumb>
               <BreadcrumbList>
-                <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="#">
-                    Building Your Application
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator className="hidden md:block" />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                </BreadcrumbItem>
+                {breadcrumbs.map((item, index) => (
+                  <>
+                    <BreadcrumbItem key={index} className="hidden md:block">
+                      {item.isCurrentPage ? (
+                        <BreadcrumbPage>{item.label}</BreadcrumbPage>
+                      ) : (
+                        <BreadcrumbLink href={item.href || "#"}>
+                          {item.label}
+                        </BreadcrumbLink>
+                      )}
+                    </BreadcrumbItem>
+                    {index < breadcrumbs.length - 1 && (
+                      <BreadcrumbSeparator className="hidden md:block" />
+                    )}
+                  </>
+                ))}
               </BreadcrumbList>
-            </Breadcrumb> */}
+            </Breadcrumb>
           </div>
         </header>
         {children}

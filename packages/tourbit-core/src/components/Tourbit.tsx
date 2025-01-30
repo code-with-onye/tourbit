@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useApi } from "./TourbitProvider";
-import TourPopup from "./TourPopup";
+import { TourPopup } from "./TourPopup";
 import {
   FeatureTourProps,
   useFeatureTourState,
@@ -124,6 +124,7 @@ const Tourbit: React.FC<FeatureTourProps> = ({ tourId, customStyles = {} }) => {
         animation="bounce"
         onSkip={handleClose}
         showSpotlight
+        mode="live"
       />
     </>
   );

@@ -27,9 +27,22 @@ import {
 } from "@/components/ui/sidebar";
 import { z } from "zod";
 import { UserSchema } from "@/schemas/user";
+import { useUserStore } from "@/store/userStore";
+import { useRouter } from "next/navigation";
 
 export function NavUser({ user }: { user: z.infer<typeof UserSchema> }) {
   const { isMobile } = useSidebar();
+  const { logout } = useUserStore();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      router.push("/signin");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
 
   return (
     <SidebarMenu>
@@ -96,7 +109,7 @@ export function NavUser({ user }: { user: z.infer<typeof UserSchema> }) {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout}>
               <LogOut />
               Log out
             </DropdownMenuItem>
