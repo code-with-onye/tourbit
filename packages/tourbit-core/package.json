@@ -1,19 +1,29 @@
 {
   "name": "@tourbit/cli",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "sideEffects": true,
   "license": "MIT",
   "repository": "https://github.com/tourbit/tourbit",
+  "homepage": "https://github.com/tourbit/tourbit#readme",
+  "description": "CLI tool for building interactive product tours and user onboarding experiences. Create step-by-step guides and in-app walkthroughs for React applications.",
   "keywords": [
-    "tourbit",
-    "tool",
-    "tour"
+    "user-onboarding",
+    "product-tours",
+    "onboarding-tool",
+    "feature-adoption",
+    "walkthroughs",
+    "in-app-guides",
+    "react-tours",
+    "user-guides",
+    "tutorial-system",
+    "product-education"
   ],
   "files": [
-    "dist/**"
+    "dist/**",
+    "README.md"
   ],
   "scripts": {
     "build:css": "npx tailwindcss -i ./src/global.css -o ./dist/index.css",

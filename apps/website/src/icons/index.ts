@@ -1,0 +1,1 @@
+export { TourbitLogo } from "./TourbitLogo";

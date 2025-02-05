@@ -2,7 +2,6 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { GithubIcon, GoggleIcon } from "@/assets/icons";
 import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 
@@ -93,7 +92,7 @@ export function SignUpForm({
                     Or continue with
                   </span>
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                {/* <div className="grid grid-cols-2 gap-4">
                   <Button variant="outline" className="w-full">
                     <GoggleIcon />
                     <span className="sr-only">Sign up with Google</span>
@@ -102,7 +101,7 @@ export function SignUpForm({
                     <GithubIcon />
                     <span className="sr-only">Sign up with Github</span>
                   </Button>
-                </div>
+                </div> */}
                 <div className="text-center text-xs">
                   Already have an account?{" "}
                   <Link href="/signin" className="underline underline-offset-4">

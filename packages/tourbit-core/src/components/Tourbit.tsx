@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { useApi } from "./TourbitProvider";
+import { useApi, User } from "./TourbitProvider";
 import { TourPopup } from "./TourPopup";
 import {
   FeatureTourProps,
@@ -11,7 +11,7 @@ import {
 } from "@tourbit/utils";
 
 const Tourbit: React.FC<FeatureTourProps> = ({ tourId, customStyles = {} }) => {
-  const { tourbitInstance, userId } = useApi();
+  const { tourbitInstance, userId, user } = useApi();
 
   // Fetch tour data
   const {
@@ -35,6 +35,71 @@ const Tourbit: React.FC<FeatureTourProps> = ({ tourId, customStyles = {} }) => {
   });
 
   const steps = progressData?.data?.tourDetails?.steps || [];
+
+  const { mutate: createUser, isPending: isCreatingUser } = useMutation({
+    mutationKey: ["create-user"],
+    mutationFn: async (data: {
+      userId: string;
+      tourId: string;
+      user: User;
+    }) => {
+      const { userId, user } = data;
+      return tourbitInstance.post("/user/create", {
+        tourId,
+        userId,
+        name: user?.name,
+        email: user?.email,
+      });
+    },
+    onError: (error) => {
+      console.error("Failed to create user:", error);
+    },
+  });
+
+  const { mutate: createTourProgress, isPending: isCreatingProgress } =
+    useMutation({
+      mutationKey: ["create-tour-progress"],
+      mutationFn: async (data: { userId: string; tourId: string }) => {
+        return tourbitInstance.post("/tour/progress", {
+          tour: data.tourId,
+          user: data.userId,
+        });
+      },
+      onError: (error) => {
+        console.error("Failed to create tour progress:", error);
+      },
+    });
+
+  const [hasInitialized, setHasInitialized] = useState(false);
+
+  useEffect(() => {
+    if (
+      userId &&
+      user &&
+      !hasInitialized &&
+      !isCreatingUser &&
+      !isCreatingProgress
+    ) {
+      setHasInitialized(true);
+      createUser(
+        { userId, user, tourId },
+        {
+          onSuccess: () => {
+            createTourProgress({ userId, tourId });
+          },
+        }
+      );
+    }
+  }, [
+    userId,
+    user,
+    hasInitialized,
+    isCreatingUser,
+    isCreatingProgress,
+    createUser,
+    createTourProgress,
+    tourId,
+  ]);
 
   // Update progress
   const { mutate: updateProgress } = useMutation({

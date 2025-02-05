@@ -68,6 +68,7 @@ export const DeveloperSection = () => {
               size="icon"
               onClick={copyToClipboard}
               disabled={!apiKey}
+              id="dev2"
             >
               {copied ? (
                 <Check className="h-4 w-4 text-green-500" />
@@ -81,6 +82,7 @@ export const DeveloperSection = () => {
             <Button
               onClick={generateNewToken}
               className="flex items-center gap-2"
+              id="dev1"
             >
               <RefreshCw className="h-4 w-4" />
               Generate New Key

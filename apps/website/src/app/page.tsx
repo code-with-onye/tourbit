@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import { Tourbit } from "@tourbit/cli";
 
 export default function Home() {
   return (
@@ -105,7 +104,6 @@ export default function Home() {
           Go to nextjs.org →
         </a>
       </footer>
-      <Tourbit tourId="tourbit-2eb442" />
     </div>
   );
 }

@@ -85,4 +85,11 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+  h3 {
+    @apply text-xs font-medium text-primary;
+  }
+
+  p {
+    @apply text-sm leading-relaxed text-foreground;
+  }
 }

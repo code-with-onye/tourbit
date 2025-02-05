@@ -15,6 +15,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { Fragment } from "react";
 
 type BreadcrumbItem = {
   label: string;
@@ -35,15 +36,15 @@ export const DashboardLayout = ({
     <SidebarProvider>
       <AppSidebar user={user} />
       <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2">
+        <header className="flex h-12 shrink-0 items-center gap-2">
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
-            <Separator orientation="vertical" className="mr-2 h-4" />
+            <Separator orientation="vertical" className="mr-2 h-3" />
             <Breadcrumb>
               <BreadcrumbList>
                 {breadcrumbs.map((item, index) => (
-                  <>
-                    <BreadcrumbItem key={index} className="hidden md:block">
+                  <Fragment key={index}>
+                    <BreadcrumbItem className="hidden md:block text-xs">
                       {item.isCurrentPage ? (
                         <BreadcrumbPage>{item.label}</BreadcrumbPage>
                       ) : (
@@ -55,7 +56,7 @@ export const DashboardLayout = ({
                     {index < breadcrumbs.length - 1 && (
                       <BreadcrumbSeparator className="hidden md:block" />
                     )}
-                  </>
+                  </Fragment>
                 ))}
               </BreadcrumbList>
             </Breadcrumb>

@@ -21,6 +21,7 @@ import { z } from "zod";
 import { TourPreview } from "./tour-preview";
 import clsx from "clsx";
 import { EmptyState } from "@/components/shared/empty-state";
+import Loader from "@/components/ui/loader";
 
 export const TourSection = () => {
   return (
@@ -50,12 +51,13 @@ const TourHeader = () => {
     );
   };
   return (
-    <header className="w-full flex items-center justify-between border-b pb-3 px-4">
-      <h3 className="font-semibold text-lg">Tours</h3>
+    <header className="w-full flex items-center justify-between border-b pb-2 px-4">
+      <h3 className="text-sm font-semibold">Tours</h3>
       <Button
         icon={ChevronRight}
         iconPosition="right"
         onClick={() => handleCreateTour()}
+        id="tour1"
       >
         Create Tour
       </Button>
@@ -75,7 +77,7 @@ const TourMain = () => {
   const { mutate: deleteTour } = useDeleteTour();
 
   if (isPending) {
-    return <div>loading...</div>;
+    return <Loader />;
   }
 
   if (!data.length) {
@@ -143,12 +145,12 @@ const TourMain = () => {
           <div className="w-full flex flex-col space-y-6">
             <div className="flex items-center justify-between">
               <button
-                className="flex items-center gap-x-2 px-3 py-2 rounded-md transition-colors
+                className="flex items-center gap-x-2 px-2 py-1 rounded-md transition-colors 
                 hover:bg-red-50 text-red-600 border border-red-200 hover:border-red-300"
                 onClick={() => handleDeleteTour(tourId as string)}
               >
                 <Delete className="w-4 h-4" />
-                <span className="text-sm font-medium">Delete Tour</span>
+                <span className="text-xs font-medium">Delete Tour</span>
               </button>
 
               {isTourPending ? (
@@ -157,7 +159,7 @@ const TourMain = () => {
                 <TooltipWrapper content="Click to copy tour ID">
                   <div
                     className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 rounded-md cursor-pointer
-                    transition-colors text-slate-600 font-mono text-sm"
+                    transition-colors text-slate-600 font-mono text-xs"
                     onClick={() => copyToClipboard(tourData.alias)}
                   >
                     {tourData.alias}
@@ -168,7 +170,7 @@ const TourMain = () => {
 
             <div className="space-y-6 bg-white p-2 rounded-lg shadow-sm">
               <div>
-                <h3 className="text-lg font-semibold text-slate-800 mb-4">
+                <h3 className="mb-4 text-sm font-medium text-gray-500">
                   Tour Details
                 </h3>
                 <TourForm tourId={tourId} />
@@ -177,7 +179,7 @@ const TourMain = () => {
 
             <div className="space-y-6 bg-white p-2 rounded-lg shadow-sm">
               <div>
-                <h3 className="text-lg font-semibold text-slate-800 mb-4">
+                <h3 className="mb-4 text-sm font-medium text-gray-500">
                   Tour Steps
                 </h3>
                 <StepForm tourId={tourId} />
@@ -190,7 +192,7 @@ const TourMain = () => {
       {/* View Section */}
       <section
         className={clsx([
-          "w-[40%] p-6 h-full overflow-y-auto flex items-center justify-center",
+          "w-[40%] p-6 h-full overflow-y-auto flex items-center justify-center bg-gray-200",
           { hidden: !tourId },
         ])}
       >

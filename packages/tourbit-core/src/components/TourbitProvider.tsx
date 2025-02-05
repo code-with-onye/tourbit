@@ -1,13 +1,12 @@
 import {
   QueryClient,
   QueryClientProvider,
-  useMutation,
 } from "@tanstack/react-query";
 import { ApiContextError } from "@tourbit/utils";
 import axios from "axios";
-import { createContext, ReactNode, useContext, useEffect } from "react";
+import { createContext, ReactNode, useContext } from "react";
 
-type User = {
+export type User = {
   name: string;
   email: string;
 };
@@ -36,33 +35,6 @@ export const useApi = () => {
     throw new ApiContextError("useApi must be used within an ApiProvider");
   }
   return context;
-};
-
-const UserCreationHandler: React.FC<{ userId?: string; user?: User }> = ({
-  userId,
-  user,
-}) => {
-  const { tourbitInstance } = useApi();
-
-  const { mutate: createUser } = useMutation({
-    mutationKey: ["create-user"],
-    mutationFn: async (data: { userId: string; user: User }) => {
-      const { userId, user } = data;
-      return tourbitInstance.post("/user/create", {
-        userId,
-        name: user?.name,
-        email: user?.email,
-      });
-    },
-  });
-
-  useEffect(() => {
-    if (userId && user) {
-      createUser({ userId, user });
-    }
-  }, [userId, user, createUser]);
-
-  return null;
 };
 
 export const TourbitProvider: React.FC<ApiProviderProps> = ({
@@ -100,7 +72,6 @@ export const TourbitProvider: React.FC<ApiProviderProps> = ({
   return (
     <QueryClientProvider client={queryClient}>
       <TourbitContext.Provider value={value}>
-        <UserCreationHandler userId={userId} user={user} />
         {children}
       </TourbitContext.Provider>
     </QueryClientProvider>
