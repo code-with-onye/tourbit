@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import Cookies from "js-cookie";
 import { z } from "zod";
 import { create } from "zustand";
@@ -92,7 +91,7 @@ export const useUserStore = create<UserState>()(
               isAuthenticated: true,
               isLoading: false,
             });
-          } catch (error) {
+          } catch (_error) {
             set({
               error: {
                 message: "Login failed",
@@ -112,7 +111,7 @@ export const useUserStore = create<UserState>()(
               isLoading: false,
               error: null,
             });
-          } catch (error) {
+          } catch (_error) {
             set({
               error: {
                 message: "Logout failed",
@@ -141,7 +140,7 @@ export const useUserStore = create<UserState>()(
               user: updatedUser,
               isLoading: false,
             });
-          } catch (error) {
+          } catch (_error) {
             set({
               error: {
                 message: "Update failed",
