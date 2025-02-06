@@ -91,7 +91,8 @@ export const useUserStore = create<UserState>()(
               isAuthenticated: true,
               isLoading: false,
             });
-          } catch (_error) {
+          } catch (error) {
+            console.error("Login error:::", error);
             set({
               error: {
                 message: "Login failed",
@@ -111,7 +112,8 @@ export const useUserStore = create<UserState>()(
               isLoading: false,
               error: null,
             });
-          } catch (_error) {
+          } catch (error) {
+            console.error("Logout error:::", error);
             set({
               error: {
                 message: "Logout failed",
@@ -140,7 +142,8 @@ export const useUserStore = create<UserState>()(
               user: updatedUser,
               isLoading: false,
             });
-          } catch (_error) {
+          } catch (error) {
+            console.error("Update error:::", error);
             set({
               error: {
                 message: "Update failed",
