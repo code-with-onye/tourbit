@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import Cookies from "js-cookie";
 import { z } from "zod";
 import { create } from "zustand";
