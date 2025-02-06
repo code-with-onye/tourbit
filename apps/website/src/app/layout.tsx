@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { TourbitProvider } from "@tourbit/cli";
+// import { TourbitProvider } from "@tourbit/cli";
 import "./globals.css";
 import { TanstackProvider } from "@/providers/tanstack-provider";
 import { Toaster } from "@/components/ui/sonner";
@@ -28,17 +28,17 @@ export default async function RootLayout({
     <html lang="en">
       <body className={poppins.className}>
         <TanstackProvider>
-          <TourbitProvider
+          {/* <TourbitProvider
             apiKey={process.env.NEXT_PUBLIC_TOURBIT_API_KEY as string}
             userId={user.userId as string}
             user={{
               name: user.name,
               email: user.email,
             }}
-          >
+          > */}
             {children}
             <Toaster richColors closeButton position="top-left" />
-          </TourbitProvider>
+          {/* </TourbitProvider> */}
         </TanstackProvider>
       </body>
     </html>

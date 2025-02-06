@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { TourPopup } from "@tourbit/cli";
+// import { useState } from "react";
+// import { TourPopup } from "@tourbit/cli";
 import { useGetTourById } from "@/hooks/server/tour";
 import { useSearchParams } from "next/navigation";
 import { Route, Workflow } from "lucide-react";
@@ -7,7 +7,7 @@ import { EmptyState } from "@/components/shared/empty-state";
 import Loader from "@/components/ui/loader";
 
 export const TourPreview = () => {
-  const [currentStep, setCurrentStep] = useState(0);
+  // const [currentStep, setCurrentStep] = useState(0);
 
   const searchParams = useSearchParams();
   const tourId = searchParams.get("tourId");
@@ -16,22 +16,22 @@ export const TourPreview = () => {
 
   const steps = data?.steps || [];
 
-  const handleNext = () => {
-    if (currentStep < steps.length - 1) {
-      setCurrentStep((prev) => prev + 1);
-    }
-  };
+  // const handleNext = () => {
+  //   if (currentStep < steps.length - 1) {
+  //     setCurrentStep((prev) => prev + 1);
+  //   }
+  // };
 
-  const handlePrev = () => {
-    if (currentStep > 0) {
-      setCurrentStep((prev) => prev - 1);
-    }
-  };
+  // const handlePrev = () => {
+  //   if (currentStep > 0) {
+  //     setCurrentStep((prev) => prev - 1);
+  //   }
+  // };
 
-  const handleClose = () => {
-    console.log("Tour closed");
-    setCurrentStep(0);
-  };
+  // const handleClose = () => {
+  //   console.log("Tour closed");
+  //   setCurrentStep(0);
+  // };
 
   if (!tourId) {
     return (
@@ -69,7 +69,7 @@ export const TourPreview = () => {
   return (
     <div className="w-full h-full relative">
       <div className="absolute inset-0 flex items-center justify-center">
-        <TourPopup
+        {/* <TourPopup
           step={steps[currentStep]}
           currentStep={currentStep}
           totalSteps={steps.length}
@@ -79,7 +79,7 @@ export const TourPreview = () => {
           animation="bounce"
           onSkip={handleClose}
           mode="preview"
-        />
+        /> */}
       </div>
     </div>
   );
