@@ -43,7 +43,7 @@ export const TourbitProvider: React.FC<ApiProviderProps> = ({
   userId,
   user,
 }) => {
-  const baseUrl = "http://localhost:5000";
+  const baseUrl = "https://tourbit-api.onrender.com";
   const queryClient = new QueryClient();
 
   if (!apiKey) {
