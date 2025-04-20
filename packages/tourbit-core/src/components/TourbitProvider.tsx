@@ -1,7 +1,4 @@
-import {
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ApiContextError } from "@tourbit/utils";
 import axios from "axios";
 import { createContext, ReactNode, useContext } from "react";
@@ -43,7 +40,10 @@ export const TourbitProvider: React.FC<ApiProviderProps> = ({
   userId,
   user,
 }) => {
-  const baseUrl = "https://tourbit-api.onrender.com";
+  const baseUrl =
+    process.env.NODE_ENV === "production"
+      ? process.env.TOURBIT_SERVER_PROD_URL
+      : process.env.TOURBIT_SERVER_URL;
   const queryClient = new QueryClient();
 
   if (!apiKey) {
